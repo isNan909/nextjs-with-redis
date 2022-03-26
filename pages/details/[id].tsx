@@ -1,14 +1,14 @@
 import type { NextPage, GetStaticProps } from 'next';
 import { GetServerSideProps } from 'next';
 import Image from 'next/image';
-import loadImage from '../../utils/loadImage';
 import NextLink from 'next/link';
+import { fetchCache } from '../../src/redisCache';
+import loadImage from '../../utils/loadImage';
 import { Box, Link } from '@chakra-ui/react';
 import { PokemonDetailResults } from '../../interface/main';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 
 const PokemonDetail: NextPage<{ info: PokemonDetailResults }> = ({ info }) => {
-  // console.log(info);
   return (
     <div>
       <Box color="green.500">
@@ -67,11 +67,17 @@ const PokemonDetail: NextPage<{ info: PokemonDetailResults }> = ({ info }) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id: name } = context.query;
-  const data = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
-  const response: PokemonDetailResults = await data.json();
+
+  const fetchData = async () => {
+    const data = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+    const response: PokemonDetailResults = await data.json();
+    return response;
+  };
+
+  const cachedData = await fetchCache(name, fetchData);
   return {
     props: {
-      info: response,
+      info: cachedData,
     },
   };
 };

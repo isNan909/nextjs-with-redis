@@ -44,18 +44,19 @@ const Home: NextPage<{ pokemons: Pokemons[] }> = ({ pokemons }) => {
           fontWeight="semibold"
           letterSpacing="wid
           e"
-          display="flex"
-          alignItems="center"
-          fontSize="3xl"
+          fontSize="4xl"
+          textAlign="center"
         >
-          Search your favourite Pokemon
-          <Image
-            src="/pokemon.png"
-            m-l="5"
-            alt="pokemon"
-            width="50"
-            height="50"
-          />
+          <Box>
+            <Image
+              src="/pokemon.png"
+              m-l="5"
+              alt="pokemon"
+              width="50"
+              height="50"
+            />
+          </Box>
+          Pokemon Inventory
         </Box>
 
         <Box my="10">
@@ -65,7 +66,7 @@ const Home: NextPage<{ pokemons: Pokemons[] }> = ({ pokemons }) => {
                 <Select
                   id="country"
                   placeholder={
-                    selectedPokemon ? selectedPokemon : 'Select Pokemon'
+                    selectedPokemon ? selectedPokemon : 'Select a pokemon'
                   }
                   onChange={handelSelect}
                 >
@@ -96,7 +97,7 @@ const Home: NextPage<{ pokemons: Pokemons[] }> = ({ pokemons }) => {
 
 export const getStaticProps: GetStaticProps = async () => {
   const res = await fetch(
-    'https://pokeapi.co/api/v2/pokemon?limit=100&offset=100'
+    'https://pokeapi.co/api/v2/pokemon?limit=200&offset=200'
   );
   const { results }: GetPokemonResults = await res.json();
 
