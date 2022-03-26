@@ -7,8 +7,11 @@ export interface Pokemons {
     url?: string;
 }
 
-export interface Ability {
-    ability: [];
+export interface PokemonAbility {
+    ability: {
+        name: string;
+        url: string;
+    }
 }
 
 export interface Form {
@@ -21,22 +24,21 @@ export interface GameIndex {
     version: {
         name: string;
         url: string;
-    }
+    };
 }
 
 export interface HeldItem {
     item: {
         name: string;
         url: string;
-    }
+    };
 }
 
 export interface Move {
     move: {
         name: string;
         url: string;
-
-    }
+    };
 }
 
 export interface Species {
@@ -50,7 +52,7 @@ export interface Stat {
     stat: {
         name: string;
         url: string;
-    }
+    };
 }
 
 export interface Sprites {
@@ -58,7 +60,7 @@ export interface Sprites {
     back_female?: string;
     back_shiny?: string;
     back_shiny_female?: string;
-    front_default?: string;
+    front_default: string;
     front_female?: string;
     front_shiny?: string;
     front_shiny_female?: string;
@@ -72,7 +74,7 @@ export interface Type {
 }
 
 export interface PokemonDetailResults {
-    abilities: Ability[];
+    abilities: PokemonAbility[];
     base_experience: number;
     forms: Form[];
     game_indices: GameIndex[];

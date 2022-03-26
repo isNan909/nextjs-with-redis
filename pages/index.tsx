@@ -17,17 +17,14 @@ const Home: NextPage<{ pokemons: Pokemons[] }> = ({ pokemons }) => {
   };
 
   const searchPokemon = () => {
-    if (selectedPokemon === '') {
-      toast({
+    if (selectedPokemon === '')
+      return toast({
         title: 'No pokemon selected',
         description: 'You need to select a pokemon to search.',
         status: 'error',
         duration: 4000,
         isClosable: true,
       });
-      return;
-    }
-    console.log(selectedPokemon);
     router.push(`/details/${selectedPokemon}`);
   };
 
