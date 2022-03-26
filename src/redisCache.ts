@@ -1,9 +1,26 @@
 import { redisConnect } from "../utils/redisConnection";
+import { performance } from "perf_hooks";
+
+const startPerfTimer = (): number => {
+    return performance.now();
+}
+
+const endPerfTimer = (): number => {
+    return performance.now();
+}
+
+const calculatePerformance = (startTime: number, endTime: number): void => {
+    console.log(`Call took ${endTime - startTime} milliseconds`);
+}
 
 export const fetchCache = async (key: string, fetchData: () => Promise<unknown>, expiresIn: number) => {
     const cachedData = await getKey(key);
-    if (cachedData) return cachedData;
-    return setValue(key, fetchData, expiresIn);
+    if (cachedData) {
+        return cachedData
+
+    };
+    setValue(key, fetchData, expiresIn);
+    return
 }
 
 const getKey = async <T>(key: string): Promise<T | null> => {
