@@ -5,13 +5,13 @@ import NextLink from 'next/link';
 import { fetchCache } from '../../src/redisCache';
 import { PokemonDetailResults } from '../../interface/main';
 import loadImage from '../../utils/loadImage';
-import { Box, Link } from '@chakra-ui/react';
+import { Box, Link, ListItem, UnorderedList } from '@chakra-ui/react';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 
 const PokemonDetail: NextPage<{ info: PokemonDetailResults }> = ({ info }) => {
   return (
     <div>
-      <Box color="green.500">
+      <Box color="green.500" my="8">
         <NextLink href="/" passHref>
           <Link>
             <ArrowBackIcon w={6} h={6} />
@@ -19,47 +19,70 @@ const PokemonDetail: NextPage<{ info: PokemonDetailResults }> = ({ info }) => {
           </Link>
         </NextLink>
       </Box>
-      <Box fontSize="3xl" fontWeight="semibold">
-        <h2>{info?.name}</h2>
-        <span>Height: {info?.height}</span>
-        <br /> <br />
-        <span>
-          <Image
-            loader={loadImage}
-            unoptimized
-            src={info?.sprites?.front_default}
-            width="200"
-            height="200"
-            alt="pokemon"
-          />
-          <u>Abilities:</u>
-          <br />
+      <Box
+        borderWidth="1px"
+        borderRadius="lg"
+        overflow="hidden"
+        display="flex"
+        justifyContent="center"
+        mb="3"
+      >
+        <Image
+          loader={loadImage}
+          unoptimized
+          src={info?.sprites?.front_default}
+          width="200"
+          height="200"
+          alt="pokemon"
+        />
+      </Box>
+      <Box
+        mt="1"
+        fontWeight="bold"
+        as="h2"
+        lineHeight="tight"
+        isTruncated
+        fontSize="2xl"
+        pb="3"
+      >
+        {info?.name}
+      </Box>
+      <Box fontSize="md" fontWeight="medium" color="gray.500">
+        Experience: {info?.base_experience}, Height: {info?.height}
+      </Box>
+      <Box pt="4">
+        <Box
+          my="5"
+          color="gray.500"
+          fontWeight="bold"
+          letterSpacing="wide"
+          fontSize="xs"
+          textTransform="uppercase"
+        >
+          Abilities:
+        </Box>
+        <UnorderedList>
           {info?.abilities.map((item, index) => {
-            return (
-              <ul key={index}>
-                <li>{item?.ability?.name}</li>
-              </ul>
-            );
+            return <ListItem key={index}>{item?.ability?.name}</ListItem>;
           })}
-        </span>
-        <br />
-        <br />
-        <span>
-          Base experience:
-          {info?.base_experience}
-        </span>
-        <br />
-        <br />
-        <span>
+        </UnorderedList>
+      </Box>
+      <Box pt="4">
+        <Box
+          my="5"
+          color="gray.500"
+          fontWeight="bold"
+          letterSpacing="wide"
+          fontSize="xs"
+          textTransform="uppercase"
+        >
           Stats:
+        </Box>
+        <UnorderedList>
           {info.stats.map((item, index) => {
-            return (
-              <ul key={index}>
-                <li>{item?.stat?.name}</li>
-              </ul>
-            );
+            return <ListItem key={index}>{item?.stat?.name}</ListItem>;
           })}
-        </span>
+        </UnorderedList>
       </Box>
     </div>
   );
