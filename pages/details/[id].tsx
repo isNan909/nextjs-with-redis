@@ -98,10 +98,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return response;
   };
 
-  const cachedData = await fetchCache(name, fetchData, 60 * 60 * 24);
+  const info = await fetchCache(name, fetchData, 60 * 60 * 24);
   return {
     props: {
-      info: cachedData,
+      info,
     },
   };
 };

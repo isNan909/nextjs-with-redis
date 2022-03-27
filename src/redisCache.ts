@@ -10,20 +10,21 @@ const endPerfTimer = (): number => {
 }
 
 const calculatePerformance = (startTime: number, endTime: number): void => {
-    console.log(`Call took ${endTime - startTime} milliseconds`);
+    console.log(`Response took ${endTime - startTime} milliseconds`);
 }
 
-export const fetchCache = async (key: string, fetchData: () => Promise<unknown>, expiresIn: number) => {
+export const fetchCache = async (key: string, fetchData: () => Promise<unknown | null | undefined>, expiresIn: number) => {
     startPerfTimer();
     const cachedData = await getKey(key);
     if (cachedData) {
+        console.log("Fetched from cache");
         calculatePerformance(startPerfTimer(), endPerfTimer());
         return cachedData
 
     };
-    setValue(key, fetchData, expiresIn);
+    console.log("Fetched from API");
     calculatePerformance(startPerfTimer(), endPerfTimer());
-    return
+    return setValue(key, fetchData, expiresIn);
 }
 
 const getKey = async <T>(key: string): Promise<T | null> => {
